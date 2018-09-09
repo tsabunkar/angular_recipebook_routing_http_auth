@@ -9,11 +9,11 @@ export class HeaderComponent implements OnInit {
     constructor() { }
 
     ngOnInit() { }
-    @Output() customeChild_ClickedEvent = new EventEmitter<string>();
+/*     @Output() customeChild_ClickedEvent = new EventEmitter<string>();
 
     OnClickOfTab(myVara: string) {
         this.customeChild_ClickedEvent.emit(myVara);
-    }
+    } */
 
 
 }

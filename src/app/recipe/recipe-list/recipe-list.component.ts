@@ -10,7 +10,7 @@ import { RecipeService } from '../recipe-service/recipe.service';
 export class RecipeListComponent implements OnInit {
 
   recipesArray: Recipe[] = []; //Array of Recipe Object
- 
+
   constructor(private recipeService: RecipeService) { }
 
   ngOnInit() {
@@ -21,7 +21,7 @@ export class RecipeListComponent implements OnInit {
     recipeObj1: Recipe = new Recipe('Gobi Manchuri ', 'Gobi Manchuri is an indian cum chinse dish', 'http://s3.amazonaws.com/appforest_uf/f1486610188974x481748790945857800/Semi_Gravy_gobi__manchurian.jpg')
    */
 
- 
+
   /* 
   @Output() selectedRecipeForDetailDescriptionFrmC2P_customEvent = new EventEmitter<Recipe>();
 
