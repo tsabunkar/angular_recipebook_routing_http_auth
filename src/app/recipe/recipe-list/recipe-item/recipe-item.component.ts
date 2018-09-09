@@ -9,10 +9,10 @@ import { RecipeService } from '../../recipe-service/recipe.service';
 })
 export class RecipeItemComponent implements OnInit {
 
-  @Input('singleRecipeItemPropBindingfromParnt2Child') recipe: Recipe;
-
-
-  constructor(private recipeService: RecipeService) { }
+    @Input('singleRecipeItemPropBindingfromParnt2Child') recipe: Recipe;
+  /* 
+  
+    constructor(private recipeService: RecipeService) { } */
 
 
   ngOnInit() {
@@ -20,11 +20,12 @@ export class RecipeItemComponent implements OnInit {
   }
 
   /*   @Output() recipeSelectedFromRecipeItem_customEvent_FrmC2P = new EventEmitter<void>(); */
-  onClickOfSingleRecipeItemSelected() {
-    // console.log('onClickOfSingleRecipeItem');
-    /*  this.recipeSelectedFromRecipeItem_customEvent_FrmC2P.emit(); */
-    
-    this.recipeService.recipeSelected_CustomEvent_fromC2S.emit(this.recipe);
-  }
+  /*   onClickOfSingleRecipeItemSelected() {
+      // console.log('onClickOfSingleRecipeItem');
+      //  this.recipeSelectedFromRecipeItem_customEvent_FrmC2P.emit();
+      
+      this.recipeService.recipeSelected_CustomEvent_fromC2S.emit(this.recipe);
+    }
+   */ 
 
 }

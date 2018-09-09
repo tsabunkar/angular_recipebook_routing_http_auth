@@ -37,4 +37,10 @@ export class RecipeService {
     addIngredientToShoppingList(ingredientArrVal: Ingredient[]) {
         this.shoppingListService.addIngredientsArrayToExistingIngredientArrayInShoppingList(ingredientArrVal)
     }
+
+    getRecipeDetailsFromId(index: number) {
+        // return this.recipesArray.slice()[index]
+        return this.recipesArray[index]
+    }
+
 }
