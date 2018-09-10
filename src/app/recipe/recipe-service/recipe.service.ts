@@ -5,7 +5,7 @@ import { ShoppingListService } from '../../shopping-list/shopping-service/shoppi
 
 @Injectable()
 export class RecipeService {
-    recipeSelected_CustomEvent_fromC2S = new EventEmitter<Recipe>();
+    // recipeSelected_CustomEvent_fromC2S = new EventEmitter<Recipe>();
 
     constructor(private shoppingListService: ShoppingListService) { }
 

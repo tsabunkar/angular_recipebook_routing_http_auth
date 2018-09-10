@@ -1,15 +1,14 @@
 <div class="row">
   <div class="col-xs-10">
-<!--   
+    <!--   
     <app-shopping-edit (sendIngredientObjFrmC2P_customEvent)="ingredirentObjectAddedFunc($event)"></app-shopping-edit>
- -->    
- <app-shopping-edit></app-shopping-edit>
+ -->
+    <app-shopping-edit></app-shopping-edit>
     <hr>
     <ul class="list-group">
-      <a href="#" class="list-group-item" style="cursor: pointer"
-       *ngFor="let ingredient of ingredientsArray">
-       Product Name :  {{ingredient?.name}} <br/>
-       Product Cost : {{ingredient?.amount}}
+      <a class="list-group-item" style="cursor: pointer" *ngFor="let ingredient of ingredientsArray">
+        Product Name : {{ingredient?.name}} <br />
+        Product Cost : {{ingredient?.amount}}
       </a>
     </ul>
   </div>

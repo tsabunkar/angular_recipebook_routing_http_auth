@@ -15,12 +15,12 @@ export class RecipeDetailsComponent implements OnInit {
 
 
 
-  /*   @Input('detailededRecipeFromP2C') recipeObj: Recipe;
+    // @Input('detailededRecipeFromP2C') recipeObj: Recipe;
   
     onClickOfAddIngredientToShoppingList() {
       this.recipeService.addIngredientToShoppingList(this.recipeObj.ingredients);
       //ingredients -> is an array of ingredient elements
-    } */
+    }
 
 
   recipeObj: Recipe;

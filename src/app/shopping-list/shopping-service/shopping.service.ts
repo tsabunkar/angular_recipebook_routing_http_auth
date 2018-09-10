@@ -1,12 +1,14 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { Ingredient } from '../../shared/models/ingredient.model';
+import { Subject } from 'rxjs';
 
 @Injectable()
 export class ShoppingListService {
 
     //we need to tell the browser/Page that new ingredient element is added to ingredients Array
-    ingredientElementAddedToIngredientArray_CustomEvent = new EventEmitter<Ingredient[]>();
-
+    // ingredientElementAddedToIngredientArray_CustomEvent = new EventEmitter<Ingredient[]>();
+    //!using subject instead of emitting customEvent
+    ingredientElementAddedToIngredientArray_CustomSubject = new Subject<Ingredient[]>();
     constructor() { }
 
     private ingredients: Ingredient[] = [
@@ -24,7 +26,8 @@ export class ShoppingListService {
     addIngredientsElementsToArray(ingredientElement: Ingredient): void {
         this.ingredients.push(ingredientElement);
         //emitting a event, and telling other components that ingredient element has been added to array
-        this.ingredientElementAddedToIngredientArray_CustomEvent.emit(this.ingredients.slice())
+        // this.ingredientElementAddedToIngredientArray_CustomEvent.emit(this.ingredients.slice())
+        this.ingredientElementAddedToIngredientArray_CustomSubject.next(this.ingredients.slice())
     }
 
     addIngredientsArrayToExistingIngredientArrayInShoppingList(ingredientsArra: Ingredient[]) {
@@ -36,7 +39,8 @@ export class ShoppingListService {
 
         this.ingredients.push(...ingredientsArra);
         //emit an event, letting other compo's know that new ingredients (array) are added to ingredientsArraay
-        this.ingredientElementAddedToIngredientArray_CustomEvent.emit(this.ingredients.slice())
+        // this.ingredientElementAddedToIngredientArray_CustomEvent.emit(this.ingredients.slice())
+        this.ingredientElementAddedToIngredientArray_CustomSubject.next(this.ingredients.slice())
 
     }
 }

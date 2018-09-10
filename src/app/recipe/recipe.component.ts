@@ -11,17 +11,17 @@ import { RecipeService } from './recipe-service/recipe.service';
 })
 export class RecipeComponent implements OnInit {
 
-  constructor(private recipeService: RecipeService) { }
+  // constructor(private recipeService: RecipeService) { }
 
   ngOnInit() {
-    this.recipeService.recipeSelected_CustomEvent_fromC2S.subscribe(
+   /*  this.recipeService.recipeSelected_CustomEvent_fromC2S.subscribe(
       (recipeVal) => {
         this.detailedRecipeElementSend2Child = recipeVal
       }
-    )
+    ) */
   }
 
-  detailedRecipeElementSend2Child: Recipe
+  // detailedRecipeElementSend2Child: Recipe
 
 
   /* 

@@ -31,6 +31,7 @@ export class ShoppingEditComponent implements OnInit {
     } 
     */
 
+  //!using subject instead of emitting customEvent
   onAddInShoppingCart() {
     const ingredientName = this.nameVara.nativeElement.value
     const ingredientAmount = this.amountVara.nativeElement.value

@@ -6,14 +6,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  shouldShowRecipesTab: string;
+  // shouldShowRecipesTab: string;
 
-  onClickOfHeaderEvent(event) {
-    if (event == 'recipe')
-      this.shouldShowRecipesTab = 'show_recipe';
-    else
-      this.shouldShowRecipesTab = 'show_shopping';
-  }
-
+  /*  onClickOfHeaderEvent(event) {
+     if (event == 'recipe')
+       this.shouldShowRecipesTab = 'show_recipe';
+     else
+       this.shouldShowRecipesTab = 'show_shopping';
+   }
+  */
 
 }
