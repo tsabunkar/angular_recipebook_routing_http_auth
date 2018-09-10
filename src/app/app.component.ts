@@ -8,7 +8,8 @@ import { Component } from '@angular/core';
 export class AppComponent {
   // shouldShowRecipesTab: string;
 
-  /*  onClickOfHeaderEvent(event) {
+  /*  
+  onClickOfHeaderEvent(event) {
      if (event == 'recipe')
        this.shouldShowRecipesTab = 'show_recipe';
      else
