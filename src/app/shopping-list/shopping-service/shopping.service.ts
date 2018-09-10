@@ -9,6 +9,8 @@ export class ShoppingListService {
     // ingredientElementAddedToIngredientArray_CustomEvent = new EventEmitter<Ingredient[]>();
     //!using subject instead of emitting customEvent
     ingredientElementAddedToIngredientArray_CustomSubject = new Subject<Ingredient[]>();
+    startedEditingShoppingItem_CustomSubject = new Subject<number>();
+
     constructor() { }
 
     private ingredients: Ingredient[] = [
@@ -43,4 +45,9 @@ export class ShoppingListService {
         this.ingredientElementAddedToIngredientArray_CustomSubject.next(this.ingredients.slice())
 
     }
+
+    getIngredientItemFromIndex(index: number) {
+        return this.ingredients[index];
+    }
+
 }

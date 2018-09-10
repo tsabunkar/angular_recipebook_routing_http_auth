@@ -1,22 +1,40 @@
-import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Ingredient } from '../../shared/models/ingredient.model';
 import { ShoppingListService } from '../shopping-service/shopping.service';
 import { NgForm } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-shopping-edit',
   templateUrl: './shopping-edit.component.html',
   styleUrls: ['./shopping-edit.component.css']
 })
-export class ShoppingEditComponent implements OnInit {
+export class ShoppingEditComponent implements OnInit, OnDestroy {
+
+  @ViewChild('formObj') shoppingList_ngForm: NgForm;
+  isEditMode: boolean = false;
+  mysubscription: Subscription;
+  editedItemIndex: number;
+  ingredientItemEdited: Ingredient;
 
   constructor(private shoppingListService: ShoppingListService) { }
 
+
   ngOnInit() {
+    this.mysubscription = this.shoppingListService.startedEditingShoppingItem_CustomSubject
+      .subscribe((index: number) => {
+        this.isEditMode = true;
+        this.editedItemIndex = index;
+        this.ingredientItemEdited = this.shoppingListService.getIngredientItemFromIndex(index)
+        this.shoppingList_ngForm.setValue({
+          'nameControl': this.ingredientItemEdited.name,
+          'amountControl': this.ingredientItemEdited.amount
+        })
+      });
   }
 
-/*   @ViewChild('nameInput') nameVara: ElementRef;
-  @ViewChild('amountInput') amountVara: ElementRef; */
+  /*   @ViewChild('nameInput') nameVara: ElementRef;
+    @ViewChild('amountInput') amountVara: ElementRef; */
 
   /* 
     @Output('sendIngredientObjFrmC2P_customEvent') ingredientObj = new EventEmitter<Ingredient>();
@@ -33,18 +51,24 @@ export class ShoppingEditComponent implements OnInit {
     */
 
   //!using subject instead of emitting customEvent
-/*   onAddInShoppingCart() {
-    const ingredientName = this.nameVara.nativeElement.value
-    const ingredientAmount = this.amountVara.nativeElement.value
-    const newIngredient = new Ingredient(ingredientName, ingredientAmount);
-    this.shoppingListService.addIngredientsElementsToArray(newIngredient)
-  } */
-  onAddInShoppingCart(ngFormVal : NgForm) {
- /*    const ingredientName = this.nameVara.nativeElement.value
-    const ingredientAmount = this.amountVara.nativeElement.value */
+  /*   onAddInShoppingCart() {
+      const ingredientName = this.nameVara.nativeElement.value
+      const ingredientAmount = this.amountVara.nativeElement.value
+      const newIngredient = new Ingredient(ingredientName, ingredientAmount);
+      this.shoppingListService.addIngredientsElementsToArray(newIngredient)
+    } */
+
+  onAddShoppingItem(ngFormVal: NgForm) {
+    console.log(ngFormVal);
     const formValue = ngFormVal.value;
     const newIngredient = new Ingredient(formValue.nameControl, formValue.amountControl);
     this.shoppingListService.addIngredientsElementsToArray(newIngredient)
   }
 
+
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    this.mysubscription.unsubscribe();
+  }
 }

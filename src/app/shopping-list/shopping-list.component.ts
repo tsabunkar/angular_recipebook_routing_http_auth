@@ -48,4 +48,8 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     //Add 'implements OnDestroy' to the class.
     this.mysubscription.unsubscribe();//this will prevent any memory leak, whil creating own subject/observable
   }
+
+  onEditItem(index: number) {
+    this.shoppingListService.startedEditingShoppingItem_CustomSubject.next(index);
+  }
 }
