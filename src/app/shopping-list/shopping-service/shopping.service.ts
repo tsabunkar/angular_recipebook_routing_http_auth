@@ -50,4 +50,13 @@ export class ShoppingListService {
         return this.ingredients[index];
     }
 
+    updateExisitingIngredient(index: number, newIngredient: Ingredient) {
+        this.ingredients[index] = newIngredient;
+        this.ingredientElementAddedToIngredientArray_CustomSubject.next(this.ingredients.slice())
+    }
+
+    deleteIngredientItemFromArray(index: number){
+        this.ingredients.splice(index,1);
+        this.ingredientElementAddedToIngredientArray_CustomSubject.next(this.ingredients.slice())
+    }
 }
