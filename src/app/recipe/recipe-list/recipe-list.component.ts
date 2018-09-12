@@ -13,10 +13,17 @@ export class RecipeListComponent implements OnInit {
   recipesArray: Recipe[] = []; //Array of Recipe Object
 
   constructor(private recipeService: RecipeService, private router: Router
-    , private activatedRoute : ActivatedRoute) { }
+    , private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
+    //!if new recipeitem is added or updated to reflect in the DOM we r emitting an event and
+    //!subscribing it here
+    this.recipeService.recipeChangedDOM_customEvent
+      .subscribe((updatedRecipesArray: Recipe[]) => {
+        this.recipesArray = updatedRecipesArray
+      })
     this.recipesArray = this.recipeService.getRecipe();
+
   }
   /* 
     recipeObj: Recipe = new Recipe('Pasta', 'Pasta dish is made of sunfest pasta', 'https://images.media-allrecipes.com/images/56589.png')
@@ -35,6 +42,6 @@ export class RecipeListComponent implements OnInit {
 
 
   onNewRecipe() {
-    this.router.navigate(['new'], {relativeTo : this.activatedRoute})
+    this.router.navigate(['new'], { relativeTo: this.activatedRoute })
   }
 }

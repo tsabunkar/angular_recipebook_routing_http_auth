@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { RecipeService } from '../recipe-service/recipe.service';
+import { Recipe } from '../models/recipe.model';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -25,10 +26,10 @@ export class RecipeEditComponent implements OnInit {
       //if url is http://localhost:4200/recipes/new -> then we get param['id'] value as undefined  (New Recipe)
       //if url is http://localhost:4200/recipes/0/edit -> then we get param['id'] value as - 0 (Edit Recipe)
       this.isInEditMode = param['id'] != null;
-      console.log('isInEditMode ', this.isInEditMode);
-      if (this.isInEditMode) {
-        this.initializeForm();
-      }
+      console.log('isInEditMode ? ', this.isInEditMode);
+      // if (this.isInEditMode) {
+      this.initializeForm();
+      // }
     })
   }
 
@@ -39,26 +40,72 @@ export class RecipeEditComponent implements OnInit {
     let recipeName = '';
     let imageUrl = '';
     let recipeDescription = '';
+    let recipeIngredientArray = new FormArray([]);//intinally formArray will be empty an array
 
-    if (this.isInEditMode) { //if in edit mode then fetching the value from service
+
+    if (this.isInEditMode) { //if in edit mode then fetching the value from service  (Edit Recipe)
       console.log(this.idToBeEdited);
       const recipeObj = this.recipeService.getRecipeDetailsFromId(this.idToBeEdited);
       recipeName = recipeObj.name;
       imageUrl = recipeObj.imagePath;
       recipeDescription = recipeObj.description;
-    }
+      if (recipeObj['ingredients']) {//recipeObj.ingredients is an array which has list of Ingredients Object
+        for (const ingredientItem of recipeObj.ingredients) {
+          recipeIngredientArray.push(new FormGroup({
+            'name': new FormControl(ingredientItem.name, Validators.required),
+            'amount': new FormControl(ingredientItem.amount, [
+              Validators.required,
+              Validators.pattern(/[1-9]+[0-9]*$/)
+            ])
+          })
+          );
+        }
+      }
+    } //end of if
 
+    //if not in editmode then where r adding empty formControl values  (Add New Recipe)
     this.recipeFormGroup = new FormGroup({
-      'nameControl': new FormControl(recipeName),
-      'imageControl': new FormControl(imageUrl),
-      'descriptionControl': new FormControl(recipeDescription)
+      'nameControl': new FormControl(recipeName, Validators.required),
+      'imageControl': new FormControl(imageUrl, Validators.required),
+      'descriptionControl': new FormControl(recipeDescription, Validators.required),
+      'recipeIngredientArrayControl': recipeIngredientArray
     });
 
   }
 
   onSubmitForm() {
+
     console.log(this.recipeFormGroup);
+    console.log(this.recipeFormGroup.value['nameControl']);
+    console.log(this.recipeFormGroup.value);
+    console.log(this.recipeFormGroup.value['recipeIngredientArrayControl']);
+
+    const newRecipeObject = new Recipe(
+      this.recipeFormGroup.value['nameControl'],
+      this.recipeFormGroup.value['descriptionControl'],
+      this.recipeFormGroup.value['imageControl'],
+      this.recipeFormGroup.value['recipeIngredientArrayControl'],
+    );
+    if (this.isInEditMode) {
+      this.recipeService.updateRecipeOnFormSubmission(this.idToBeEdited, newRecipeObject)
+    } else {
+      this.recipeService.addNewRecipeOnFormSubmission(newRecipeObject)
+      //! Instead of injecting the value in C.I and then passing the object to save or we can 
+      //!directly save the form value, (bcoz- this.recipeFormGroup.value Object is same our Recipe Model)
+      //! but for me it is not working bcoz - I have given different property names in model and form value
+      //! for ex - name (in model) whereas (In model) nameControl,ingredients(in model) whereas (In model) recipeIngredientArrayControl
+      // this.recipeService.addNewRecipeOnFormSubmission(this.recipeFormGroup.value)
+    }
   }
 
+
+  onAddEditIngredients() {
+    (<FormArray>this.recipeFormGroup.get('recipeIngredientArrayControl')).push(
+      new FormGroup({
+        'name': new FormControl(null, Validators.required), //nameControl field
+        'amount': new FormControl(null, [Validators.required, Validators.pattern(/[1-9]+[0-9]*$/)]), //amountControl field
+      })
+    )
+  }
 
 }
