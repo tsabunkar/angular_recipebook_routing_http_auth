@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { RecipeService } from '../recipe-service/recipe.service';
@@ -16,7 +16,7 @@ export class RecipeEditComponent implements OnInit {
   idToBeEdited: number;
   isInEditMode: boolean = false;//initially assuming we creating a new recipe (i.e- not in the edit mode)
 
-  constructor(private activatedRoute: ActivatedRoute, private recipeService: RecipeService) { }
+  constructor(private activatedRoute: ActivatedRoute, private recipeService: RecipeService, private router: Router) { }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe((param: Params) => {
@@ -96,6 +96,10 @@ export class RecipeEditComponent implements OnInit {
       //! for ex - name (in model) whereas (In model) nameControl,ingredients(in model) whereas (In model) recipeIngredientArrayControl
       // this.recipeService.addNewRecipeOnFormSubmission(this.recipeFormGroup.value)
     }
+
+    //after form is submitted naviagate to landing page
+    // this.router.navigate(['/recipes']);
+    this.onCancelOfRecipeForm();
   }
 
 
@@ -106,6 +110,15 @@ export class RecipeEditComponent implements OnInit {
         'amount': new FormControl(null, [Validators.required, Validators.pattern(/[1-9]+[0-9]*$/)]), //amountControl field
       })
     )
+  }
+
+  onCancelOfRecipeForm() {
+    // this.router.navigate(['/recipes']);
+    this.router.navigate(['../'], { relativeTo: this.activatedRoute });//go back to previous route in the url
+  }
+
+  deleteIngredientFromRecipeItem(index: number) {
+    (<FormArray>this.recipeFormGroup.get('recipeIngredientArrayControl')).removeAt(index);
   }
 
 }

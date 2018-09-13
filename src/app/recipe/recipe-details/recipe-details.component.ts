@@ -15,12 +15,12 @@ export class RecipeDetailsComponent implements OnInit {
 
 
 
-    // @Input('detailededRecipeFromP2C') recipeObj: Recipe;
-  
-    onClickOfAddIngredientToShoppingList() {
-      this.recipeService.addIngredientToShoppingList(this.recipeObj.ingredients);
-      //ingredients -> is an array of ingredient elements
-    }
+  // @Input('detailededRecipeFromP2C') recipeObj: Recipe;
+
+  onClickOfAddIngredientToShoppingList() {
+    this.recipeService.addIngredientToShoppingList(this.recipeObj.ingredients);
+    //ingredients -> is an array of ingredient elements
+  }
 
 
   recipeObj: Recipe;
@@ -40,6 +40,12 @@ export class RecipeDetailsComponent implements OnInit {
     // this.router.navigate(['edit'], { relativeTo: this.activatedRoute });
     //!alternative logic :)
     this.router.navigate(['../', this.recipeid, 'edit'], { relativeTo: this.activatedRoute })
+  }
+
+  onDeleteRecipe() {
+    let index = this.recipeid;
+    this.recipeService.deleteRecipeItem(index);
+    this.router.navigate(['/recipes'])
   }
 
 }

@@ -55,4 +55,9 @@ export class RecipeService {
         this.recipesArray[index] = recipeObjToUpdate
         this.recipeChangedDOM_customEvent.next(this.recipesArray.slice());
     }
+
+    deleteRecipeItem(index: number) {
+        this.recipesArray.splice(index, 1);
+        this.recipeChangedDOM_customEvent.next(this.recipesArray.slice());
+    }
 }

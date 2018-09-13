@@ -1,15 +1,17 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Recipe } from '../models/recipe.model';
 import { RecipeService } from '../recipe-service/recipe.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-recipe-list',
   templateUrl: './recipe-list.component.html',
   styleUrls: ['./recipe-list.component.css']
 })
-export class RecipeListComponent implements OnInit {
+export class RecipeListComponent implements OnInit, OnDestroy {
 
+  subscription: Subscription;
   recipesArray: Recipe[] = []; //Array of Recipe Object
 
   constructor(private recipeService: RecipeService, private router: Router
@@ -18,7 +20,7 @@ export class RecipeListComponent implements OnInit {
   ngOnInit() {
     //!if new recipeitem is added or updated to reflect in the DOM we r emitting an event and
     //!subscribing it here
-    this.recipeService.recipeChangedDOM_customEvent
+    this.subscription = this.recipeService.recipeChangedDOM_customEvent //since custom event so we need to unsubscribe it
       .subscribe((updatedRecipesArray: Recipe[]) => {
         this.recipesArray = updatedRecipesArray
       })
@@ -43,5 +45,9 @@ export class RecipeListComponent implements OnInit {
 
   onNewRecipe() {
     this.router.navigate(['new'], { relativeTo: this.activatedRoute })
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }
