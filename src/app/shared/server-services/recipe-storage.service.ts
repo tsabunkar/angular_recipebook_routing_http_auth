@@ -45,8 +45,17 @@ export class RecipeStorageBackendService {
         return this.httpClient.get<Recipe[]>(this.url)
             .pipe(
                 map((responseData) => {
-                    this.recipeService.setRecipesArray(responseData); //!updating the recipeArray which is present in recipeService class
-                    console.log(responseData);
+                    let recipesArray: Recipe[] = responseData;
+                    for (const recipeObj of recipesArray) {
+                        if (!recipeObj['ingredients']) {//check if each recipe object has ingredients property 
+                            //(if not then add this property with empty array)
+                            console.log(recipeObj);
+                            recipeObj['ingredients'] = [];
+                        }
+                    }
+
+                    this.recipeService.setRecipesArray(recipesArray); //!updating the recipeArray which is present in recipeService class
+                    console.log(recipesArray);
                     // return responseData;
                 }),
                 catchError(err => {
