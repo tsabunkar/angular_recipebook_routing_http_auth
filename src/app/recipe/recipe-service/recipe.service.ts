@@ -13,24 +13,27 @@ export class RecipeService {
     recipeChangedDOM_customEvent = new Subject<Recipe[]>();
 
     //making this recipesArray as private, so that this property will be encapsulated from outside 
-    private recipesArray: Recipe[] = [
-        new Recipe('Pasta', 'Pasta dish is made of sunfest pasta',
-            'https://images.media-allrecipes.com/images/56589.png',
-            [
-                new Ingredient('Veges', 1),
-                new Ingredient('tomato', 20),
-                new Ingredient('chilly', 5),
-            ]),
-        new Recipe('Gobi Manchuri ', 'Gobi Manchuri is an indian cum chinse dish',
-            'http://s3.amazonaws.com/appforest_uf/f1486610188974x481748790945857800/Semi_Gravy_gobi__manchurian.jpg',
-            [
-                new Ingredient('gobi', 1),
-                new Ingredient('tomato', 20),
-                new Ingredient('oil', 45),
-                new Ingredient('green piece', 90)
-            ])
-    ];
-
+    /* 
+        private recipesArray: Recipe[] = [
+            new Recipe('Pasta', 'Pasta dish is made of sunfest pasta',
+                'https://images.media-allrecipes.com/images/56589.png',
+                [
+                    new Ingredient('Veges', 1),
+                    new Ingredient('tomato', 20),
+                    new Ingredient('chilly', 5),
+                ]),
+            new Recipe('Gobi Manchuri ', 'Gobi Manchuri is an indian cum chinse dish',
+                'http://s3.amazonaws.com/appforest_uf/f1486610188974x481748790945857800/Semi_Gravy_gobi__manchurian.jpg',
+                [
+                    new Ingredient('gobi', 1),
+                    new Ingredient('tomato', 20),
+                    new Ingredient('oil', 45),
+                    new Ingredient('green piece', 90)
+                ])
+        ];
+    
+     */
+    private recipesArray: Recipe[] = [];
     //getters
     getRecipe(): Recipe[] {
         return this.recipesArray.slice();
@@ -59,5 +62,10 @@ export class RecipeService {
     deleteRecipeItem(index: number) {
         this.recipesArray.splice(index, 1);
         this.recipeChangedDOM_customEvent.next(this.recipesArray.slice());
+    }
+
+    setRecipesArray(recipesArrayFromBackend: Recipe[]) {
+        this.recipesArray = recipesArrayFromBackend;
+        this.recipeChangedDOM_customEvent.next(this.recipesArray.slice())
     }
 }
