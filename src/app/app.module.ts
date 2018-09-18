@@ -21,6 +21,8 @@ import { RecipeStartComponent } from './recipe/recipe-start/recipe-start.compone
 import { RecipeEditComponent } from './recipe/recipe-edit/recipe-edit.component';
 import { RecipeService } from './recipe/recipe-service/recipe.service';
 import { RecipeStorageBackendService } from './shared/server-services/recipe-storage.service';
+import { SignupComponent } from './auth/signup/signup.component';
+import { SigninComponent } from './auth/signin/signin.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { RecipeStorageBackendService } from './shared/server-services/recipe-sto
     FooterComponent,
     DropDownCutomDirective,
     RecipeStartComponent,
-    RecipeEditComponent
+    RecipeEditComponent,
+    SignupComponent,
+    SigninComponent
   ],
   imports: [
     BrowserModule,
