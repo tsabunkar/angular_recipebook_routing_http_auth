@@ -57,8 +57,29 @@ Object :)
  }
 
 
------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------
 
+AUthentication in Firebase ->
+Authentication (tab) > Singin method (tab) > Sign-in provider > Email/password (enable)
+
+Now Instiall firebase in your angular appln (bcoz- we dont have backend serverlike node, java we r using
+firebase sdk as our backend server. So in order to use this firebase sdk we should install below cmd)-
+npm i --save firebase
+
+To initialize firebase when our angular application is started go to - app.component.ts
+import * as firebase from {firebase}
+
+ ngOnInit() {
+    //here we r configuring the firebase setup
+    //Authentication > Sign-in method > WEB SETUP (button) > copy apiKey and authDomain from config object
+    firebase.initializeApp({
+      apiKey: "AIzaSyCkaJIEMhBAU__bamgzEmE4jaZL-7ZVFVg",
+      authDomain: "ng-recipe-book-4712d.firebaseapp.com"
+    })
+    //thus this will initialize firebase when our application is started
+  }
+
+Note to get this apiKey and authDomain Value go to -> firbase website then -> Authentication > Sign-in method > WEB SETUP (button) > copy apiKey and authDomain from config object
 
 
 
