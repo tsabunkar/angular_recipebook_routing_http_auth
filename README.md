@@ -81,5 +81,10 @@ import * as firebase from {firebase}
 
 Note to get this apiKey and authDomain Value go to -> firbase website then -> Authentication > Sign-in method > WEB SETUP (button) > copy apiKey and authDomain from config object
 
+When we signin with firebase sdk, A new token is generated, this token will be stored by firebase (will be
+taken care by  firebase) we need to store this token.
+To this token where it is stored goto >
+f12 > Application > local storage > http://localhost:4200 > u will find key value pair of token
 
 
+-------------------------------------------------------------------------------------------------------
