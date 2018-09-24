@@ -86,5 +86,23 @@ taken care by  firebase) we need to store this token.
 To this token where it is stored goto >
 f12 > Application > local storage > http://localhost:4200 > u will find key value pair of token
 
+Now since we r using firebase authentication process, so change the rules in the firebase realtime database
+Go to Database> rules > 
+{
+  "rules" : {
+    ".read" : "true", //true means any 1 who knows the url can read and write in this firebase realtime db
+    ".wirte" : "true",
+  }
+}
+
+So we need to restrict the access who can read and write into the firebase db- that is who so ever has the 
+authentication token can only read and write into this firebase db
+this can be done by changing the rule i.e-
+{
+  "rules" : {
+    ".read" : "auth != null",
+    ".wirte" : "auth != null",
+  }
+}
 
 -------------------------------------------------------------------------------------------------------
