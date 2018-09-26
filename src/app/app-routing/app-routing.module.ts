@@ -7,15 +7,16 @@ import { RecipeStartComponent } from '../recipe/recipe-start/recipe-start.compon
 import { RecipeEditComponent } from '../recipe/recipe-edit/recipe-edit.component';
 import { SignupComponent } from '../auth/signup/signup.component';
 import { SigninComponent } from '../auth/signin/signin.component';
+import { AuthGuard } from '../auth/auth-guard.service';
 
 const appRoutes: Routes = [
     { path: '', pathMatch: 'full', redirectTo: '/recipes' },
     {
         path: 'recipes', component: RecipeComponent, children: [
             { path: '', component: RecipeStartComponent },// http://localhost:4200/recipes
-            { path: 'new', component: RecipeEditComponent }, // http://localhost:4200/recipes/new
+            { path: 'new', component: RecipeEditComponent, canActivate: [AuthGuard] }, // http://localhost:4200/recipes/new
             { path: ':myid', component: RecipeDetailsComponent }, // http://localhost:4200/recipes/{myid}
-            { path: ':id/edit', component: RecipeEditComponent }, // http://localhost:4200/recipes/{id}/edit
+            { path: ':id/edit', component: RecipeEditComponent, canActivate: [AuthGuard] }, // http://localhost:4200/recipes/{id}/edit
 
             //!Note : dynamic paramter in the routes should come last in the priority
             //! i.e - first preference to  http://localhost:4200/recipes/new then next prefernce to

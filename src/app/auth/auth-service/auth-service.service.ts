@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import * as firebase from 'firebase'
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthService {
 
   currentTokenValue: string;
 
-  constructor() { }
+  constructor(private router : Router) { }
 
   singup(email: string, password: string) {
     console.log('calling from auth service for signup method');
@@ -28,6 +29,8 @@ export class AuthService {
             .then(
               (token: string) => this.currentTokenValue = token
             )
+            this.router.navigate(['/']); //redirecting the user form signin to home page i.e- 
+            //from 'http://localhost:4200/signin'  to -> 'http://localhost:4200'
         }
       )
       .catch(err => console.log(err))
@@ -46,5 +49,14 @@ export class AuthService {
       )
     return this.currentTokenValue
 
+  }
+
+  isUserAuthenticated() {
+    return this.currentTokenValue != null; //if token has value (it is not null) then user is authenticated
+  }
+
+  logOut() {
+    firebase.auth().signOut();
+    this.currentTokenValue = null;
   }
 }

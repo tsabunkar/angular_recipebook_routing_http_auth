@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { RecipeStorageBackendService } from '../shared/server-services/recipe-storage.service';
 import { Recipe } from '../recipe/models/recipe.model';
+import { AuthService } from '../auth/auth-service/auth-service.service';
 
 @Component({
     selector: 'app-header',
@@ -8,7 +9,9 @@ import { Recipe } from '../recipe/models/recipe.model';
 })
 
 export class HeaderComponent implements OnInit {
-    constructor(private recipeStorageBackendService: RecipeStorageBackendService) { }
+    constructor(private recipeStorageBackendService: RecipeStorageBackendService,
+        private authService: AuthService
+    ) { }
 
     ngOnInit() { }
     /*     @Output() customeChild_ClickedEvent = new EventEmitter<string>();
@@ -33,6 +36,10 @@ export class HeaderComponent implements OnInit {
     onFetchData() {
         this.recipeStorageBackendService.getAllRecipe()
             .subscribe();
+    }
+
+    onLogout() {
+        this.authService.logOut();
     }
 
 

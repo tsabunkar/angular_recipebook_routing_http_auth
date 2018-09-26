@@ -24,6 +24,7 @@ import { RecipeStorageBackendService } from './shared/server-services/recipe-sto
 import { SignupComponent } from './auth/signup/signup.component';
 import { SigninComponent } from './auth/signin/signin.component';
 import { AuthService } from './auth/auth-service/auth-service.service';
+import { AuthGuard } from './auth/auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,7 @@ import { AuthService } from './auth/auth-service/auth-service.service';
     ReactiveFormsModule,//Reactive Forms
     HttpClientModule
   ],
-  providers: [ShoppingListService, RecipeService, RecipeStorageBackendService, AuthService],
+  providers: [ShoppingListService, RecipeService, RecipeStorageBackendService, AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
